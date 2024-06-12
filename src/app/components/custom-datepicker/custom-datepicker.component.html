@@ -1,0 +1,19 @@
+<div [formGroup]="myForm">
+    <mat-form-field appearance="outline">
+        <mat-label>Year</mat-label>
+        <input
+        matInput
+        placeholder="YYYY"
+        [matDatepicker]="datePicker"
+        formControlName="date"
+        (focus)="datePicker?.open()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker
+        #datePicker
+        color="primary"
+        startView="multi-year"
+        (yearSelected)="onYearSelected($event, datePicker)"
+        ></mat-datepicker>
+    </mat-form-field>
+</div>
