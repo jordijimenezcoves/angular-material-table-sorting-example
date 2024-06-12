@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from '@angular/material/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 class CustomDateAdapter extends NativeDateAdapter {
   override format(date: Date): string {
-    return `${date.getFullYear()}`;
+    const dateFormatted = formatDate(date, 'YYYY/MM', 'en-GB');
+    return dateFormatted;
   }
 }
 
@@ -18,8 +20,13 @@ class CustomDateAdapter extends NativeDateAdapter {
     {
       provide: MAT_DATE_FORMATS,
       useValue: {
-        parse: { dateInput: 'YYYY' },
-        display: { dateInput: 'YYYY', monthYearLabel: 'YYYY', dateA11yLabel: 'LL', monthYearA11yLabel: 'YYYY' },
+        parse: { dateInput: 'YYYY/MM' },
+        display: { 
+          dateInput: 'YYYY/MM', 
+          monthYearLabel: 'MMMM YYYY', 
+          dateA11yLabel: 'LL', 
+          monthYearA11yLabel: 'MMMM YYYY' 
+        },
       },
     },
   ],
@@ -33,11 +40,10 @@ export class CustomDatepickerComponent {
   constructor() {
   }
 
-  onYearSelected(date: Date, datepicker: MatDatepicker<Date>) {
-    const normalizedYear = date.getFullYear();
-    this.myForm.controls['date'].setValue(new Date(normalizedYear, 12, 0));
+  onMonthSelected(date: Date, datepicker: MatDatepicker<Date>) {
+    this.myForm.controls['date'].setValue(date);
     datepicker.close();
-    console.log(this.myForm.controls['date'].value);
+    console.log(formatDate(date, 'YYYY/MM/dd HH:mm', 'en-GB'));
   }
 
 }

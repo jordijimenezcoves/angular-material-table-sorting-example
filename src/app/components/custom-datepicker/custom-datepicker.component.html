@@ -1,9 +1,9 @@
 <div [formGroup]="myForm">
     <mat-form-field appearance="outline">
-        <mat-label>Year</mat-label>
+        <mat-label>Year and month</mat-label>
         <input
         matInput
-        placeholder="YYYY"
+        placeholder="YYYY/MM"
         [matDatepicker]="datePicker"
         formControlName="date"
         (focus)="datePicker?.open()"
@@ -13,7 +13,7 @@
         #datePicker
         color="primary"
         startView="multi-year"
-        (yearSelected)="onYearSelected($event, datePicker)"
+        (monthSelected)="onMonthSelected($event, datePicker)"
         ></mat-datepicker>
     </mat-form-field>
 </div>
